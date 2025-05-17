@@ -9,6 +9,17 @@ header {
   text-align: center;
   margin-bottom: 40px;
 }
+
+
+.profile-icon {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 20px;
+}
+
 nav ul {
   list-style: none;
   padding: 0;
