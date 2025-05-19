@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>素数チャレンジゲーム</title>
+  <link rel="stylesheet" href="prime-game.css">
+</head>
+<body>
+  <h1>素数チャレンジ</h1>
+
+  <div id="game">
+    <div id="timer">0:00</div>
+    <button onclick="startGame()">スタート</button>
+
+    <div id="input-area" style="display: none;">
+      <input id="input" type="number" placeholder="素数を入力" autofocus>
+      <button onclick="submitNumber()">送信</button>
+      <div id="feedback"></div>
+    </div>
+
+    <div id="result"></div>
+  </div>
+
+  <script src="prime-game.js"></script>
+</body>
+</html>
