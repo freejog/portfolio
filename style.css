@@ -28,3 +28,24 @@ nav li {
   display: inline;
   margin: 0 10px;
 }
+
+.work {
+  margin-bottom: 2em;
+}
+
+.work h3 {
+  margin-bottom: 0.3em;
+}
+
+.work p {
+  margin: 0.3em 0;
+}
+
+.work .description {
+  text-indent: 2em;
+}
+
+.work .answer-link {
+  text-indent: 2em;
+  margin-top: 0.3em;
+}
