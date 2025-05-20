@@ -50,3 +50,9 @@ button {
   font-size: 1.2rem;
   color: #333;
 }
+#correct-list {
+  font-family: monospace;
+  text-align: left;
+  display: inline-block;
+  white-space: pre-wrap;
+}

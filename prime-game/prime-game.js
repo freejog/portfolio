@@ -42,7 +42,18 @@ function submitNumber() {
     currentIndex++;
     input.value = "";
 
-    document.getElementById("correct-list").textContent = primes.slice(0, currentIndex).join(", ");
+    const correctPrimes = primes.slice(0, currentIndex);
+    let formatted = "";
+    for (let i = 0; i < correctPrimes.length; i++) {
+      formatted += correctPrimes[i].toString();
+      if (i < correctPrimes.length - 1) {
+        formatted += ", ";
+      }
+      if ((i + 1) % 10 === 0) {
+        formatted += "<br>";
+      }
+    }
+    document.getElementById("correct-list").innerHTML = formatted;
 
     if (currentIndex === primes.length) {
       clearInterval(timerInterval);
@@ -55,7 +66,18 @@ function submitNumber() {
     feedback.style.color = "red";
     input.value = "";
 
-    document.getElementById("correct-list").textContent = primes.slice(0, currentIndex).join(", ");
+    const correctPrimes = primes.slice(0, currentIndex);
+    let formatted = "";
+    for (let i = 0; i < correctPrimes.length; i++) {
+      formatted += correctPrimes[i].toString();
+      if (i < correctPrimes.length - 1) {
+        formatted += ", ";
+      }
+      if ((i + 1) % 10 === 0) {
+        formatted += "<br>";
+      }
+    }
+    document.getElementById("correct-list").innerHTML = formatted;
   }
 }
 
