@@ -14,9 +14,10 @@
     <button onclick="startGame()">スタート</button>
 
     <div id="input-area" style="display: none;">
-      <input id="input" type="number" placeholder="素数を入力" autofocus oninput="submitNumber()">
+      <input id="input" type="number" placeholder="素数を入力" autofocus onkeydown="handleKey(event)">
       <div id="feedback"></div>
     </div>
+    <div id="correct-list" style="margin-top: 1em;"></div>
 
     <div id="result"></div>
   </div>

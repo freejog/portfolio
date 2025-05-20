@@ -16,6 +16,7 @@ function startGame() {
   document.getElementById("result").textContent = "";
   document.getElementById("input").value = "";
   document.getElementById("input-area").style.display = "block";
+  document.getElementById("correct-list").textContent = "";
 
   startTime = new Date();
   timerInterval = setInterval(updateTimer, 100);
@@ -31,16 +32,17 @@ function updateTimer() {
 
 function submitNumber() {
   const input = document.getElementById("input");
-  const value = parseInt(input.value);
+  const value = parseInt(input.value, 10);
   const feedback = document.getElementById("feedback");
 
   if (value === primes[currentIndex]) {
-    feedback.textContent = "OK!";
+    feedback.textContent = `OK! ${value}`;
     feedback.style.color = "green";
     correctCount++;
     currentIndex++;
     input.value = "";
-    feedback.textContent = "";
+
+    document.getElementById("correct-list").textContent = primes.slice(0, currentIndex).join(", ");
 
     if (currentIndex === primes.length) {
       clearInterval(timerInterval);
@@ -52,5 +54,13 @@ function submitNumber() {
     feedback.textContent = "NO";
     feedback.style.color = "red";
     input.value = "";
+
+    document.getElementById("correct-list").textContent = primes.slice(0, currentIndex).join(", ");
+  }
+}
+
+function handleKey(event) {
+  if (event.key === "Enter") {
+    submitNumber();
   }
 }
