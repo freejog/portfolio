@@ -1,6 +1,3 @@
-
-
-
 const primes = [
   2, 3, 5, 7, 11, 13, 17, 19, 23, 29,
   31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
@@ -39,9 +36,11 @@ function submitNumber() {
 
   if (value === primes[currentIndex]) {
     feedback.textContent = "OK!";
+    feedback.style.color = "green";
     correctCount++;
     currentIndex++;
     input.value = "";
+    feedback.textContent = "";
 
     if (currentIndex === primes.length) {
       clearInterval(timerInterval);
@@ -51,6 +50,7 @@ function submitNumber() {
     }
   } else {
     feedback.textContent = "NO";
+    feedback.style.color = "red";
     input.value = "";
   }
 }

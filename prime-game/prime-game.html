@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>素数チャレンジゲーム</title>
   <link rel="stylesheet" href="prime-game.css">
+  <link rel="icon" type="image/png" href="../favicon.png">
 </head>
 <body>
   <h1>素数チャレンジ</h1>
@@ -13,8 +14,7 @@
     <button onclick="startGame()">スタート</button>
 
     <div id="input-area" style="display: none;">
-      <input id="input" type="number" placeholder="素数を入力" autofocus>
-      <button onclick="submitNumber()">送信</button>
+      <input id="input" type="number" placeholder="素数を入力" autofocus oninput="submitNumber()">
       <div id="feedback"></div>
     </div>
 
