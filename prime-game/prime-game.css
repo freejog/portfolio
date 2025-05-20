@@ -56,3 +56,7 @@ button {
   display: inline-block;
   white-space: pre-wrap;
 }
+
+.description {
+  text-align: left;
+}
