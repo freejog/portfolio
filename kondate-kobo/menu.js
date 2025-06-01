@@ -32,6 +32,17 @@ mainSelect.addEventListener("change", () => {
   document.getElementById("soup").textContent = getRandom(soup);
 });
 
+// 再生成ボタンの処理
+document.getElementById("regen").addEventListener("click", () => {
+  const selected = mainSelect.value;
+  if (!selected) return alert("先に主菜を選んでね！");
+  
+  const { side1, side2, soup } = menuData[selected];
+  document.getElementById("side1").textContent = getRandom(side1);
+  document.getElementById("side2").textContent = getRandom(side2);
+  document.getElementById("soup").textContent = getRandom(soup);
+});
+
 // ランダムに選ぶ関数
 function getRandom(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
