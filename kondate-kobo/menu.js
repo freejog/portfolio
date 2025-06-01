@@ -27,9 +27,10 @@ mainSelect.addEventListener("change", () => {
   if (!selected) return;
 
   const { side1, side2, soup } = menuData[selected];
-  document.getElementById("side1").textContent = getRandom(side1);
-  document.getElementById("side2").textContent = getRandom(side2);
-  document.getElementById("soup").textContent = getRandom(soup);
+
+  populateSelect("side1", side1);
+  populateSelect("side2", side2);
+  populateSelect("soup", soup);
 });
 
 // 再生成ボタンの処理
@@ -38,12 +39,33 @@ document.getElementById("regen").addEventListener("click", () => {
   if (!selected) return alert("先に主菜を選んでね！");
   
   const { side1, side2, soup } = menuData[selected];
-  document.getElementById("side1").textContent = getRandom(side1);
-  document.getElementById("side2").textContent = getRandom(side2);
-  document.getElementById("soup").textContent = getRandom(soup);
+
+  populateSelect("side1", side1);
+  populateSelect("side2", side2);
+  populateSelect("soup", soup);
 });
 
 // ランダムに選ぶ関数
 function getRandom(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
+
+function populateSelect(id, options) {
+  const select = document.getElementById(id);
+  select.innerHTML = "";
+  options.forEach(opt => {
+    const option = document.createElement("option");
+    option.value = opt;
+    option.textContent = opt;
+    select.appendChild(option);
+  });
+  // 初期表示をランダムに設定
+  select.value = getRandom(options);
+  document.getElementById("label-" + id).textContent = select.value;
+}
+
+["side1", "side2", "soup"].forEach(id => {
+  document.getElementById(id).addEventListener("change", () => {
+    document.getElementById("label-" + id).textContent = document.getElementById(id).value;
+  });
+});
