@@ -53,14 +53,23 @@ function getRandom(arr) {
 function populateSelect(id, options) {
   const select = document.getElementById(id);
   select.innerHTML = "";
-  options.forEach(opt => {
+
+  // 常に「なし」を追加
+  const extendedOptions = [...options];
+  if (!extendedOptions.includes("なし")) {
+    extendedOptions.push("なし");
+  }
+
+  extendedOptions.forEach(opt => {
     const option = document.createElement("option");
     option.value = opt;
     option.textContent = opt;
     select.appendChild(option);
   });
-  // 初期表示をランダムに設定
-  select.value = getRandom(options);
+
+  // ランダム選択時、「なし」は除外。ただし他に候補がない場合は「なし」を選ぶ
+  const filtered = options.length === 0 ? ["なし"] : options;
+  select.value = getRandom(filtered);
   document.getElementById("label-" + id).textContent = select.value;
 }
 
