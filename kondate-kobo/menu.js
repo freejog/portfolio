@@ -74,12 +74,29 @@ function populateSelect(id, options) {
 
   // ランダム選択時、「なし」は除外。ただし他に候補がない場合は「なし」を選ぶ
   const filtered = options.length === 0 ? ["なし"] : options;
-  select.value = getRandom(filtered);
-  document.getElementById("label-" + id).textContent = select.value;
+  // 複数ランダム選択
+  const defaultSelections = getRandomMultiple(filtered);
+  Array.from(select.options).forEach(opt => {
+    opt.selected = defaultSelections.includes(opt.value);
+  });
+  updateLabel(id);
 }
 
 ["side1", "side2", "soup"].forEach(id => {
   document.getElementById(id).addEventListener("change", () => {
-    document.getElementById("label-" + id).textContent = document.getElementById(id).value;
+    updateLabel(id);
   });
 });
+
+function getRandomMultiple(arr) {
+  if (arr.length === 0) return ["なし"];
+  const count = Math.floor(Math.random() * Math.min(arr.length, 2)) + 1; // 1〜2個ランダムで選ぶ
+  const shuffled = [...arr].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, count);
+}
+
+function updateLabel(id) {
+  const select = document.getElementById(id);
+  const selected = Array.from(select.selectedOptions).map(opt => opt.value);
+  document.getElementById("label-" + id).textContent = selected.join("、");
+}
