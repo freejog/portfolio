@@ -80,6 +80,8 @@ function populateSelect(id, options) {
     opt.selected = defaultSelections.includes(opt.value);
   });
   updateLabel(id);
+
+  document.getElementById("final-main").textContent = mainSelect.value;
 }
 
 ["side1", "side2", "soup"].forEach(id => {
@@ -99,4 +101,5 @@ function updateLabel(id) {
   const select = document.getElementById(id);
   const selected = Array.from(select.selectedOptions).map(opt => opt.value);
   document.getElementById("label-" + id).textContent = selected.join("、");
+  document.getElementById("final-" + id).textContent = selected.join("、");
 }
