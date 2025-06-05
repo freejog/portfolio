@@ -1,0 +1,41 @@
+
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>献立編集ページ</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>献立編集ページ</h1>
+  <form id="menuForm">
+    <label>
+      主菜名：
+      <input type="text" id="mainName" required />
+    </label>
+    <br />
+    <label>
+      小鉢1（カンマ区切り）：
+      <input type="text" id="side1Input" />
+    </label>
+    <br />
+    <label>
+      小鉢2（カンマ区切り）：
+      <input type="text" id="side2Input" />
+    </label>
+    <br />
+    <label>
+      汁物（カンマ区切り）：
+      <input type="text" id="soupInput" />
+    </label>
+    <br />
+    <button type="submit">メニューを追加</button>
+  </form>
+
+  <pre id="result"></pre>
+
+  <script src="editor.js"></script>
+</body>
+</html>
