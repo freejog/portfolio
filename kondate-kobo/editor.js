@@ -1,4 +1,34 @@
 
+// menu.json から献立データを読み込んで表示
+fetch("menu.json")
+  .then(response => response.json())
+  .then(data => {
+    const menuList = document.getElementById("menuList");
+    menuList.innerHTML = "";
+
+    for (const main in data) {
+      const item = data[main];
+
+      const div = document.createElement("div");
+      div.className = "menu-item";
+
+      // 献立表示
+      div.innerHTML = `
+        <h3>${main}</h3>
+        <p><strong>小鉢1：</strong> ${item.side1.join("、") || "なし"}</p>
+        <p><strong>小鉢2：</strong> ${item.side2.join("、") || "なし"}</p>
+        <p><strong>汁物：</strong> ${item.soup.join("、") || "なし"}</p>
+        <button class="edit-btn" data-main="${main}">編集</button>
+        <button class="delete-btn" data-main="${main}">削除</button>
+      `;
+
+      menuList.appendChild(div);
+    }
+    setupActionButtons(data);
+  })
+  .catch(err => {
+    console.error("menu.jsonの読み込みに失敗しました:", err);
+  });
 
 const menuData = {}; // 仮のmenuData（保存はしない）
 
@@ -27,3 +57,27 @@ document.getElementById("menuForm").addEventListener("submit", (e) => {
   // フォームをリセット
   document.getElementById("menuForm").reset();
 });
+
+function setupActionButtons(data) {
+  document.querySelectorAll(".delete-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const main = btn.dataset.main;
+      if (confirm(`${main} を削除しますか？`)) {
+        delete data[main];
+        location.reload(); // 今は仮の再読み込みで対応
+      }
+    });
+  });
+
+  document.querySelectorAll(".edit-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const main = btn.dataset.main;
+      const item = data[main];
+      document.getElementById("mainName").value = main;
+      document.getElementById("side1Input").value = item.side1.join("、");
+      document.getElementById("side2Input").value = item.side2.join("、");
+      document.getElementById("soupInput").value = item.soup.join("、");
+      window.scrollTo(0, 0); // フォームにスクロール
+    });
+  });
+}
