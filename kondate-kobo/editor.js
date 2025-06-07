@@ -3,36 +3,47 @@ window.addEventListener("DOMContentLoaded", () => {
   const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJva2dxZXV4a3p0Y3d4bGpnYXhkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkxNzI3ODIsImV4cCI6MjA2NDc0ODc4Mn0.e8rXHGBs2TjnI0JZrFhg1wBKharHwGYuPeq3GWXjPoU";
   const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-  // menu.json から献立データを読み込んで表示
-  fetch("menu.json")
-    .then(response => response.json())
-    .then(data => {
-      const menuList = document.getElementById("menuList");
-      menuList.innerHTML = "";
+  // Supabase から献立データを読み込んで表示
+  (async () => {
+    try {
+      const { data, error } = await supabase.from("menus").select("*");
 
-      for (const main in data) {
-        const item = data[main];
+      if (error) {
+        console.error("Supabase読み込みエラー:", error.message);
+      } else {
+        const menuList = document.getElementById("menuList");
+        menuList.innerHTML = "";
 
-        const div = document.createElement("div");
-        div.className = "menu-item";
+        const menuData = {};
 
-        // 献立表示
-        div.innerHTML = `
-          <h3>${main}</h3>
-          <p><strong>小鉢1：</strong> ${item.side1.join("、") || "なし"}</p>
-          <p><strong>小鉢2：</strong> ${item.side2.join("、") || "なし"}</p>
-          <p><strong>汁物：</strong> ${item.soup.join("、") || "なし"}</p>
-          <button class="edit-btn" data-main="${main}">編集</button>
-          <button class="delete-btn" data-main="${main}">削除</button>
-        `;
+        data.forEach(item => {
+          menuData[item.name] = {
+            side1: item.side1 || [],
+            side2: item.side2 || [],
+            soup: item.soup || []
+          };
 
-        menuList.appendChild(div);
+          const div = document.createElement("div");
+          div.className = "menu-item";
+
+          div.innerHTML = `
+            <h3>${item.name}</h3>
+            <p><strong>小鉢1：</strong> ${item.side1?.join("、") || "なし"}</p>
+            <p><strong>小鉢2：</strong> ${item.side2?.join("、") || "なし"}</p>
+            <p><strong>汁物：</strong> ${item.soup?.join("、") || "なし"}</p>
+            <button class="edit-btn" data-main="${item.name}">編集</button>
+            <button class="delete-btn" data-main="${item.name}">削除</button>
+          `;
+
+          menuList.appendChild(div);
+        });
+
+        setupActionButtons(menuData);
       }
-      setupActionButtons(data);
-    })
-    .catch(err => {
-      console.error("menu.jsonの読み込みに失敗しました:", err);
-    });
+    } catch (err) {
+      console.error("Supabase読み込み中の接続エラー:", err);
+    }
+  })();
 
   const menuData = {}; // 仮のmenuData（保存はしない）
 
