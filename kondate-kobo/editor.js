@@ -1,4 +1,8 @@
 
+const supabaseUrl = "https://rokgqeuxkztcwxljgaxd.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJva2dxZXV4a3p0Y3d4bGpnYXhkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkxNzI3ODg2LCJleHAiOjIwNjQ3NDg3ODZ9.e8rXHGBs2TjnI0JZrFhg1wBKharHwGYuPeq3GWXjPoU";
+const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
 // menu.json から献立データを読み込んで表示
 fetch("menu.json")
   .then(response => response.json())
