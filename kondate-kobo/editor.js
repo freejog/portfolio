@@ -47,13 +47,19 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const menuData = {}; // 仮のmenuData（保存はしない）
 
+  const splitValues = value =>
+    value
+      .split("、")
+      .map(s => s.trim())
+      .filter(Boolean);
+
   document.getElementById("menuForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const main = document.getElementById("mainName").value.trim();
-    const side1 = document.getElementById("side1Input").value.split("、").map(s => s.trim()).filter(Boolean);
-    const side2 = document.getElementById("side2Input").value.split("、").map(s => s.trim()).filter(Boolean);
-    const soup = document.getElementById("soupInput").value.split("、").map(s => s.trim()).filter(Boolean);
+    const side1 = splitValues(document.getElementById("side1Input").value);
+    const side2 = splitValues(document.getElementById("side2Input").value);
+    const soup  = splitValues(document.getElementById("soupInput").value);
 
     if (!main) {
       alert("主菜名を入力してください");
