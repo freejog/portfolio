@@ -83,6 +83,9 @@ window.addEventListener("DOMContentLoaded", () => {
       } else {
         console.log("Supabase保存成功:", data);
         alert("メニューを保存しました！");
+        setTimeout(() => {
+          location.reload();
+        }, 100); // 100ミリ秒後にリロード
       }
     } catch (err) {
       console.error("接続または処理エラー:", err);
