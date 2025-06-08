@@ -108,6 +108,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     isEditing = false;
     editingName = "";
+    document.getElementById("submitButton").textContent = "メニューを追加";
 
     // 結果を表示
     document.getElementById("result").textContent = JSON.stringify(menuData, null, 2);
@@ -158,6 +159,7 @@ window.addEventListener("DOMContentLoaded", () => {
         isEditing = true;
         editingName = main;
         window.scrollTo(0, 0); // フォームにスクロール
+        document.getElementById("submitButton").textContent = "メニューを変更";
       });
     });
   }
