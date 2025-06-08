@@ -101,11 +101,31 @@ window.addEventListener("DOMContentLoaded", () => {
 
   function setupActionButtons(data) {
     document.querySelectorAll(".delete-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const main = btn.dataset.main;
+      btn.addEventListener("click", async () => {
+        const main = btn.dataset.main.trim();
+        console.log(`削除対象のname: [${main}]`);  // ←ここを追加        
         if (confirm(`${main} を削除しますか？`)) {
-          delete data[main];
-          location.reload(); // 今は仮の再読み込みで対応
+          try {
+            const { data, error } = await supabase
+              .from("menus")
+              .delete()
+              .eq("name", main)
+              .select(); // ここを追加
+
+            if (error) {
+              console.error("削除エラー:", error.message);
+              alert("削除に失敗しました");
+            } else if (!data || data.length === 0) {
+              console.warn("該当データが見つからず、削除されませんでした:", main);
+              alert("削除対象が見つかりませんでした");
+            } else {
+              alert("削除しました！");
+              location.reload();
+            }
+          } catch (err) {
+            console.error("削除中の接続エラー:", err);
+            alert("削除中にエラーが発生しました");
+          }
         }
       });
     });
