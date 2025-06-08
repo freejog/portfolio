@@ -46,6 +46,8 @@ window.addEventListener("DOMContentLoaded", () => {
   })();
 
   const menuData = {}; // 仮のmenuData（保存はしない）
+  let isEditing = false;
+  let editingName = "";
 
   const splitValues = value =>
     value
@@ -73,24 +75,39 @@ window.addEventListener("DOMContentLoaded", () => {
     };
 
     try {
-      const { data, error } = await supabase.from("menus").insert([
-        { name: main, side1, side2, soup }
-      ]);
+      let result;
+      if (isEditing) {
+        result = await supabase.from("menus").update({
+          name: main,
+          side1,
+          side2,
+          soup
+        }).eq("name", editingName).select();
+      } else {
+        result = await supabase.from("menus").insert([
+          { name: main, side1, side2, soup }
+        ]);
+      }
+
+      const { data, error } = result;
 
       if (error) {
         console.error("Supabase保存エラー:", error.message);
         alert("保存に失敗しました！");
       } else {
         console.log("Supabase保存成功:", data);
-        alert("メニューを保存しました！");
+        alert(isEditing ? "メニューを更新しました！" : "メニューを保存しました！");
         setTimeout(() => {
           location.reload();
-        }, 100); // 100ミリ秒後にリロード
+        }, 100);
       }
     } catch (err) {
       console.error("接続または処理エラー:", err);
       alert("予期しないエラーが発生しました");
     }
+
+    isEditing = false;
+    editingName = "";
 
     // 結果を表示
     document.getElementById("result").textContent = JSON.stringify(menuData, null, 2);
@@ -138,6 +155,8 @@ window.addEventListener("DOMContentLoaded", () => {
         document.getElementById("side1Input").value = item.side1.join("、");
         document.getElementById("side2Input").value = item.side2.join("、");
         document.getElementById("soupInput").value = item.soup.join("、");
+        isEditing = true;
+        editingName = main;
         window.scrollTo(0, 0); // フォームにスクロール
       });
     });
